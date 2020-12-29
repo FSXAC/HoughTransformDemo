@@ -17,14 +17,19 @@
             <div class="col-12">
                 <p>
                     Image width: 
-                    <input type="number" id="imageWidth" name="imageWidth" min="16" max="600" value="16" onchange="onInputImageSizeChange()">
+                    <input type="number" id="imageWidth" name="imageWidth" min="16" max="600" value="8" onchange="onInputImageSizeChange()">
+                    Hough space size:
+                    <span id="hough-size-width">23</span>
+                    &times;
+                    <span id="hough-size-height">45</span>
                 </p>
             </div>
             <div class="col-9">
                 <div id="main"></div>
             </div>
             <div class="col-3">
-
+                <button onclick="ht_inputStationary()">Transform</button>
+                <div id="output-div"></div>
             </div>
         </div>
     </div>
