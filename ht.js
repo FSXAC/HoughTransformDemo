@@ -70,7 +70,8 @@ function createEmptyImage(n) {
     for (let i = 0; i < I.length; i++) {
         I[i] = new Array(n);
         for (let j = 0; j < I[i].length; j++) {
-            I[i][j] = 0;
+            // I[i][j] = 0;
+            I[i][j] = (i == j || i + j == N - 1) ? 255 : 0;
         }
     }
 
@@ -136,12 +137,50 @@ function ht_inputStationary() {
                 
                 let theta = deltaT * v - HALF_PI;
                 let rho = i * Math.cos(theta) + j + Math.sin(theta);
-                let u = floor(rho + (M / 2));
+                let u = floor(rho - (M / 2));
                 if (u >= 0 && u < M)
                     acc[u][v]++;
             }
         }
     }
+    return acc;
+}
+
+function ht_outputstationary() {
+    let acc = createEmptyAcc(M, L);
+    const deltaT = PI / L;
+
+    for (let u = 0; u < M; u++) {
+        let rho = u - L;
+        for (let v = 0; v < L; v++) {
+            let theta = deltaT * v - HALF_PI;
+            if (theta >= -PI/4 && theta < PI/4) {
+                for (let x = 0; x < N; x++) {
+                    let y = int((rho - Math.cos(theta) * x) / Math.sin(theta));
+                    if (y >= 0 && y < N) {
+                        if (I[y][x] > 0) {
+                            acc[u][v]++;
+                        }
+                    }
+                }
+            } else {
+                for (let y = 0; y < N; y++) {
+                    let x = int((rho - Math.sin(theta) * y) / Math.cos(theta));
+                    if (x >= 0 && x < N) {
+                        if (I[y][x] > 0) {
+                            acc[u][v]++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return acc;
+}
+
+function ht() {
+    let acc = ht_outputstationary();
 
     /* Find max value */
     let max = 0;
@@ -164,6 +203,5 @@ function ht_inputStationary() {
     accI.updatePixels();
 
     /* Write to DOM */
-    let accImg = createImg(accI.canvas.toDataURL(), '');
-    accImg.parent("output-div")
+    document.getElementById("output-img").src = accI.canvas.toDataURL();
 }

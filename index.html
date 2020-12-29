@@ -9,6 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
     <script src="ht.js"></script>
+    <style>
+        #output-div img {
+            height: 800px;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -17,19 +22,21 @@
             <div class="col-12">
                 <p>
                     Image width: 
-                    <input type="number" id="imageWidth" name="imageWidth" min="16" max="600" value="8" onchange="onInputImageSizeChange()">
+                    <input type="number" id="imageWidth" name="imageWidth" min="16" max="600" value="16" onchange="onInputImageSizeChange()">
                     Hough space size:
                     <span id="hough-size-width">23</span>
                     &times;
                     <span id="hough-size-height">45</span>
+                    <button onclick="ht()">Transform</button>
                 </p>
             </div>
-            <div class="col-9">
+            <div class="col-7">
                 <div id="main"></div>
             </div>
-            <div class="col-3">
-                <button onclick="ht_inputStationary()">Transform</button>
-                <div id="output-div"></div>
+            <div class="col-5">
+                <div id="output-div">
+                    <img id="output-img" src="" alt="">
+                </div>
             </div>
         </div>
     </div>
